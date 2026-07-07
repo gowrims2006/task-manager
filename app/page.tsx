@@ -38,7 +38,7 @@ export default function Home() {
           placeholder="Add a new task"
           className="border p-2 rounded w-64"
         />
-        <button onClick={addTask} className="bg-green-500 text-white px-4 py-2 rounded">
+        <button onClick={addTask} className="bg-white-500 text-black px-4 py-2 rounded">
           Add
         </button>
       </div>
