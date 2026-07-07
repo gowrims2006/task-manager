@@ -45,9 +45,9 @@ export default function Home() {
 
       <ul className="w-80">
         {tasks.map((t, index) => (
-          <li key={index} className="bg-blue p-3 mb-2 rounded shadow flex justify-between">
+          <li key={index} className="bg-white p-3 mb-2 rounded shadow flex justify-between text-black">
             {t}
-            <button onClick={() => deleteTask(index)} className="text-red-500">Delete</button>
+            <button onClick={() => deleteTask(index)} className="text-red-500 font-semibold">Delete</button>
           </li>
         ))}
       </ul>
