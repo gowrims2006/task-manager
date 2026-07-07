@@ -1,52 +1,56 @@
 "use client";
-import { useState } from "react";
-
-type Task = {
-  text: string;
-  done: boolean;
-}
+import { useState, useEffect } from "react";
 
 export default function Home() {
-  const [tasks, setTasks] = useState<Task[]>([]);
-  const [input, setInput] = useState("");
+  const [task, setTask] = useState("");
+  const [tasks, setTasks] = useState<string[]>([]);
+
+  // Load tasks from browser
+  useEffect(() => {
+    const saved = localStorage.getItem("tasks");
+    if (saved) setTasks(JSON.parse(saved));
+  }, []);
+
+  // Save tasks to browser
+  useEffect(() => {
+    localStorage.setItem("tasks", JSON.stringify(tasks));
+  }, [tasks]);
 
   const addTask = () => {
-    if (input.trim() === "") return;
-    setTasks([...tasks, { text: input, done: false }]);
-    setInput("");
-  }
+    if (task.trim() === "") return;
+    setTasks([...tasks, task]);
+    setTask("");
+  };
 
-  const toggleTask = (index: number) => {
-    const newTasks = [...tasks];
-    newTasks[index].done = !newTasks[index].done;
-    setTasks(newTasks);
-  }
+  const deleteTask = (index: number) => {
+    setTasks(tasks.filter((_, i) => i !== index));
+  };
 
   return (
-    <main className="min-h-screen bg-gray-900 flex items-center justify-center p-4">
-      <div className="bg-gray-800 w-full max-w-md p-8 rounded-xl">
-        <h1 className="text-3xl font-bold text-cyan-400 mb-6 text-center">Task Manager</h1>
-        <div className="flex gap-2 mb-6">
-          <input
-            value={input}
-            onChange={(e) => setInput(e.target.value)}
-            className="flex-1 bg-gray-700 text-white px-4 py-2 rounded-lg outline-none"
-            placeholder="Add a new task..."
-          />
-          <button onClick={addTask} className="bg-cyan-500 px-4 py-2 rounded-lg font-bold text-black">Add</button>
-        </div>
-        <div className="space-y-2">
-          {tasks.map((task, index) => (
-            <div
-              key={index}
-              onClick={() => toggleTask(index)}
-              className={`p-3 rounded-lg cursor-pointer ${task.done ? 'bg-gray-700 line-through text-gray-500' : 'bg-gray-700 text-white'}`}
-            >
-              {task.text}
-            </div>
-          ))}
-        </div>
+    <main className="flex min-h-screen flex-col items-center p-10 bg-gray-100">
+      <h1 className="text-3xl font-bold mb-6">Task Manager</h1>
+
+      <div className="flex gap-2 mb-6">
+        <input
+          type="text"
+          value={task}
+          onChange={(e) => setTask(e.target.value)}
+          placeholder="Add a new task"
+          className="border p-2 rounded w-64"
+        />
+        <button onClick={addTask} className="bg-blue-500 text-white px-4 py-2 rounded">
+          Add
+        </button>
       </div>
+
+      <ul className="w-80">
+        {tasks.map((t, index) => (
+          <li key={index} className="bg-white p-3 mb-2 rounded shadow flex justify-between">
+            {t}
+            <button onClick={() => deleteTask(index)} className="text-red-500">Delete</button>
+          </li>
+        ))}
+      </ul>
     </main>
   );
 }
