@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-10 bg-blue-100">
+    <main className="flex min-h-screen flex-col items-center p-10 bg-purple-100">
       <h1 className="text-3xl font-bold mb-6">Task Manager</h1>
 
       <div className="flex gap-2 mb-6">
@@ -45,7 +45,7 @@ export default function Home() {
 
       <ul className="w-80">
         {tasks.map((t, index) => (
-          <li key={index} className="bg-white p-3 mb-2 rounded shadow flex justify-between">
+          <li key={index} className="bg-blue p-3 mb-2 rounded shadow flex justify-between">
             {t}
             <button onClick={() => deleteTask(index)} className="text-red-500">Delete</button>
           </li>
