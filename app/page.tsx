@@ -27,7 +27,7 @@ export default function Home() {
   };
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-10 bg-gray-100">
+    <main className="flex min-h-screen flex-col items-center p-10 bg-blue-100">
       <h1 className="text-3xl font-bold mb-6">Task Manager</h1>
 
       <div className="flex gap-2 mb-6">
@@ -38,7 +38,7 @@ export default function Home() {
           placeholder="Add a new task"
           className="border p-2 rounded w-64"
         />
-        <button onClick={addTask} className="bg-blue-500 text-white px-4 py-2 rounded">
+        <button onClick={addTask} className="bg-green-500 text-white px-4 py-2 rounded">
           Add
         </button>
       </div>
