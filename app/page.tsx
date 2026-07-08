@@ -28,6 +28,15 @@ export default function Home() {
     setTasks(newTasks)
   }
 
+  const editTask = (index: number) => {
+    const newText = prompt("Edit task:", tasks[index].text)
+    if (newText !== null && newText.trim() !== "") {
+      const newTasks = [...tasks]
+      newTasks[index].text = newText
+      setTasks(newTasks)
+    }
+  }
+
   const deleteAll = () => {
     setTasks([])
   }
@@ -41,16 +50,17 @@ export default function Home() {
           type="text"
           value={task}
           onChange={(e) => setTask(e.target.value)}
+          onKeyPress={(e) => e.key === 'Enter' && addTask()}
           placeholder="Add a new task"
           className="border-2 border-purple-400 p-2 rounded w-64 text-black bg-white"
         />
-        <button onClick={addTask} className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600">
+        <button onClick={addTask} className="bg-purple-500 text-white px-4 py-2 rounded hover:bg-purple-600 font-semibold">
           Add
         </button>
       </div>
 
       {tasks.length > 0 && (
-        <button onClick={deleteAll} className="bg-red-500 text-white px-4 py-2 rounded mb-4 hover:bg-red-600">
+        <button onClick={deleteAll} className="bg-red-500 text-white px-4 py-2 rounded mb-4 hover:bg-red-600 font-semibold">
           Delete All
         </button>
       )}
@@ -61,9 +71,14 @@ export default function Home() {
             <span onClick={() => toggleComplete(index)} className="cursor-pointer flex-1">
               {t.completed ? '✅ ' : '⭕ '}{t.text}
             </span>
-            <button onClick={() => deleteTask(index)} className="text-red-500 font-semibold ml-4 hover:text-red-700">
-              Delete
-            </button>
+            <div className="flex gap-3">
+              <button onClick={() => editTask(index)} className="text-blue-500 font-semibold hover:text-blue-700">
+                Edit
+              </button>
+              <button onClick={() => deleteTask(index)} className="text-red-500 font-semibold hover:text-red-700">
+                Delete
+              </button>
+            </div>
           </li>
         ))}
       </ul>
